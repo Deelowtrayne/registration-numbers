@@ -51,17 +51,20 @@ function createElem(reg) {
 
 function processRegistrations() {
   var enteredReg = inputElem.value.trim();
-  if (enteredReg == "") {
+
+  if (enteredReg == "" || (!enteredReg.startsWith('CA') && !enteredReg.startsWith('CJ') && 
+    !enteredReg.startsWith('CK') && !enteredReg.startsWith('CL'))) {
     document.querySelector('.alert').innerHTML = "Please enter a valid registration number";
     return;
-  }
+  } 
   // empty the alert element
   document.querySelector('.alert').innerHTML = "";
-
+  console.log('yeah');
+  
   registration.reg(enteredReg);
   registration.mapRegs();
   localStorage.setItem('Registrations', JSON.stringify(registration.registrations()));
-  // generate list item for
+  // generate list item for display
   createElem(registration.regNumber());
 }
 
