@@ -11,17 +11,17 @@ body {
   font-family: 'Helvetica Neue', helvetica, sans-serif;
   font-size: 1.4em;
   background: #F0F0F1;
-
+  text-rendering: optimizeLegibility;
 }
 
 h1 {
-  font-size: 4vw;
+  font-size: 7vw;
 }
 
 h1 small {
   display: block;
   font-size: 40%;
-  color: #0085ff;
+  color: #F0F0F1;
 }
 
 .container {
@@ -32,8 +32,10 @@ h1 small {
 
 .topbar {
   text-align: left;
+  color: #fff;
   padding: 0.5rem 2rem;
-  background: #fff;
+  background: crimson;
+  box-shadow: 2px rgba(0, 0, 0, 1)
 }
 
 .main {
@@ -50,11 +52,12 @@ h1 small {
   margin-bottom: 1rem;
   padding: 2rem;
   background: #fff;
+  border: 1px #ccc solid;
 }
 
 .row label {
   display: block;
-  margin-bottom: 0.5rem
+  margin-bottom: 1rem
 }
 
 .row input {
@@ -80,9 +83,15 @@ h1 small {
   list-style-type: none;
 }
 
+footer {
+  padding: 2rem;
+  text-align: center;
+  font-size: small;
+  background-color: crimson;
+}
 
 @media screen and (min-width: 768px) {
   h1 {
-    font-size: 3vw;
+    font-size: 2.5vw;
   }
 }

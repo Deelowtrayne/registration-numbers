@@ -69,6 +69,7 @@ function filterBy(town) {
   //if (!town || town === 'allTowns')
   let regs = Object.keys(storedRegs);
   location.hash = town; 
+  townElem.value = location.hash.substr(1);
   switch (town) {
     case 'cape-town':
     case '#cape-town': displayElem.innerHTML = "";
@@ -114,8 +115,7 @@ function filterBy(town) {
         }
       }
       break;
-    default: displayElem.innerHTML = location.hash + " is not a valid town. Please choose a town in the dropdown list";
-      
+    default: displayElem.innerHTML = location.hash + " is not a valid town.";
       break;
   }
 }
@@ -127,16 +127,13 @@ function filterBy(town) {
 btnAdd.addEventListener('click', processRegistrations);
 
 window.addEventListener('load', function() {
-  let town = townElem.value;
-  if (location.has !== '')
+  if (location.hash !== '') {
     filterBy(location.hash);
-  else
-    filterBy(town);
+  } else {
+    filterBy(townElem.value);
+  }
 });
 
 townElem.addEventListener('change', function(){
-  let town = townElem.value;
-  filterBy(town);
-  // Refresh to add the new registration
-  
+  filterBy(townElem.value);
 })
