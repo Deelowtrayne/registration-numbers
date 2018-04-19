@@ -14,6 +14,10 @@ body {
 
 }
 
+h1 {
+  font-size: 4vw;
+}
+
 h1 small {
   display: block;
   font-size: 40%;
@@ -28,7 +32,7 @@ h1 small {
 
 .topbar {
   text-align: left;
-  padding: 1rem 2rem;
+  padding: 0.5rem 2rem;
   background: #fff;
 }
 
@@ -60,6 +64,7 @@ h1 small {
 
 .row select {
   width: 100%;
+  min-width: 220px;
   padding: 0.5rem;
   font-size: large;
 }
@@ -73,4 +78,11 @@ h1 small {
 
 .display-area {
   list-style-type: none;
+}
+
+
+@media screen and (min-width: 768px) {
+  h1 {
+    font-size: 3vw;
+  }
 }

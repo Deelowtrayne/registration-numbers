@@ -1,6 +1,7 @@
 // registration number input elements
 var inputElem = document.querySelector('.regNumber');
 var btnAdd = document.querySelector('.submit-reg');
+var townElem = document.querySelector('.town-select');
 // display element
 var displayElem = document.querySelector('.display-area');
 
@@ -64,14 +65,78 @@ function processRegistrations() {
   createElem(registration.regNumber());
 }
 
-btnAdd.addEventListener('click', processRegistrations);
-window.addEventListener('load', function() {
-  let town = document.querySelector('.town-select').value;
-  console.log(town);
+function filterBy(town) {
+  //if (!town || town === 'allTowns')
   let regs = Object.keys(storedRegs);
-  if (regs.length > 0) {
-    for (let i = 0; i < regs.length; i++) {
-      createElem(regs[i]);
-    }
+  location.hash = town; 
+  switch (town) {
+    case 'cape-town':
+    case '#cape-town': displayElem.innerHTML = "";
+      if (regs.length > 0) {
+        for (let i = 0; i < regs.length; i++) {
+          if (regs[i].startsWith('CA')) 
+            createElem(regs[i]);
+        }
+      }
+      break;
+    case 'paarl':
+    case '#paarl': displayElem.innerHTML = "";
+      if (regs.length > 0) {
+        for (let i = 0; i < regs.length; i++) {
+          if (regs[i].startsWith('CJ')) 
+            createElem(regs[i]);
+        }
+      }
+      break;
+    case 'george':
+    case '#george': displayElem.innerHTML = "";
+      if (regs.length > 0) {
+        for (let i = 0; i < regs.length; i++) {
+          if (regs[i].startsWith('CK')) 
+            createElem(regs[i]);
+        }
+      }
+      break;
+    case 'stellenbosch':
+    case '#stellenbosch': displayElem.innerHTML = "";
+      if (regs.length > 0) {
+        for (let i = 0; i < regs.length; i++) {
+          if (regs[i].startsWith('CL')) 
+            createElem(regs[i]);
+        }
+      }
+      break;
+    case 'all': 
+    case '#all': displayElem.innerHTML = "";
+      if (regs.length > 0) {
+        for (let i = 0; i < regs.length; i++) {
+          createElem(regs[i]);
+        }
+      }
+      break;
+    default: displayElem.innerHTML = location.hash + " is not a valid town. Please choose a town in the dropdown list";
+      
+      break;
   }
+}
+
+/*****************************************************
+ *  LISTEN FOR BUTTON CLICKS AND ELEMENT STATE-CHANGE
+ *****************************************************/
+
+btnAdd.addEventListener('click', processRegistrations);
+
+window.addEventListener('load', function() {
+  let town = townElem.value;
+  if (location.has !== '')
+    filterBy(location.hash);
+  else
+    filterBy(location.hash);
 });
+
+townElem.addEventListener('change', function(){
+  let town = townElem.value;
+  filterBy(town);
+  // Refresh to add the new registration
+  
+})
