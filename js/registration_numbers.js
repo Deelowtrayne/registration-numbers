@@ -59,7 +59,6 @@ function processRegistrations() {
   } 
   // empty the alert element
   document.querySelector('.alert').innerHTML = "";
-  console.log('yeah');
   
   registration.reg(enteredReg);
   registration.mapRegs();
@@ -118,7 +117,7 @@ function filterBy(town) {
         }
       }
       break;
-    default: displayElem.innerHTML = location.hash + " is not a valid town.";
+    default: displayElem.innerHTML = location.hash.substr(1) + " is not a valid town.";
       break;
   }
 }
