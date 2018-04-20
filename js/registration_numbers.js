@@ -113,6 +113,7 @@ function filterBy(town) {
         }
       }
       break;
+    case '':
     case 'all':
     case '#all':
       displayElem.innerHTML = "";
@@ -135,6 +136,7 @@ function filterBy(town) {
 btnAdd.addEventListener('click', processRegistrations);
 
 window.addEventListener('load', function() {
+
   if (location.hash !== '') {
     filterBy(location.hash);
   } else {
