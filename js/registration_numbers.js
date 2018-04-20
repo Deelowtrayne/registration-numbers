@@ -129,6 +129,14 @@ function filterBy(town) {
   }
 }
 
+function clearAll() {
+  localStorage.clear();
+  townElem.value = 'all'
+  inputElem.value = "";
+  location.hash = "";
+  displayElem.innerHTML = "";
+}
+
 /*****************************************************
  *  LISTEN FOR BUTTON CLICKS AND ELEMENT STATE-CHANGE
  *****************************************************/
@@ -148,9 +156,4 @@ townElem.addEventListener('change', function() {
   filterBy(townElem.value);
 });
 
-clearBtn.addEventListener('click', function(){
-  document.querySelector('.alert').innerHTML = "";
-  localStorage.clear();
-  location.hash = "";
-  displayElem.innerHTML = "";
-})
+clearBtn.addEventListener('click', clearAll);
