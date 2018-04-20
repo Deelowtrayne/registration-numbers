@@ -1,6 +1,7 @@
 // registration number input elements
 var inputElem = document.querySelector('.regNumber');
-var btnAdd = document.querySelector('.submit-reg');
+var btnAdd = document.querySelector('.submit-btn');
+var clearBtn = document.querySelector('.clear-btn');
 var townElem = document.querySelector('.town-select');
 // display element
 var displayElem = document.querySelector('.display-area');
@@ -46,7 +47,6 @@ function createElem(reg) {
   let li = document.createElement('li');
   li.textContent = reg;
   displayElem.appendChild(li);
-
 }
 
 function processRegistrations() {
@@ -78,7 +78,7 @@ function filterBy(town) {
       displayElem.innerHTML = "";
       if (regs.length > 0) {
         for (let i = 0; i < regs.length; i++) {
-          if (regs[i].startsWith('CA'))
+          if (regs[i].startsWith('CA') && regs[i].charAt(2) != 'W')
             createElem(regs[i]);
         }
       }
@@ -146,4 +146,11 @@ window.addEventListener('load', function() {
 
 townElem.addEventListener('change', function() {
   filterBy(townElem.value);
+});
+
+clearBtn.addEventListener('click', function(){
+  document.querySelector('.alert').innerHTML = "";
+  localStorage.clear();
+  location.hash = "";
+  displayElem.innerHTML = "";
 })
