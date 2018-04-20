@@ -51,7 +51,7 @@ function createElem(reg) {
 
 function processRegistrations() {
   var enteredReg = inputElem.value.trim();
-
+  inputElem.value = "";
   if (enteredReg == "" || (!enteredReg.startsWith('CA') && !enteredReg.startsWith('CJ') &&
       !enteredReg.startsWith('CAW') && !enteredReg.startsWith('CL'))) {
     document.querySelector('.alert').innerHTML = "Please enter a valid registration number";
