@@ -10,7 +10,7 @@ function Registration(storedData) {
   var regList = {}
 
   function setReg(num) {
-    if (num.startsWith('CA') || num.startsWith('CJ') || num.startsWith('CK') || num.startsWith('CL'))
+    if (num.startsWith('CA') || num.startsWith('CJ') || num.startsWith('CAW') || num.startsWith('CL'))
       reg = num;
   }
 
@@ -52,14 +52,14 @@ function createElem(reg) {
 function processRegistrations() {
   var enteredReg = inputElem.value.trim();
 
-  if (enteredReg == "" || (!enteredReg.startsWith('CA') && !enteredReg.startsWith('CJ') && 
-    !enteredReg.startsWith('CK') && !enteredReg.startsWith('CL'))) {
+  if (enteredReg == "" || (!enteredReg.startsWith('CA') && !enteredReg.startsWith('CJ') &&
+      !enteredReg.startsWith('CAW') && !enteredReg.startsWith('CL'))) {
     document.querySelector('.alert').innerHTML = "Please enter a valid registration number";
     return;
-  } 
+  }
   // empty the alert element
   document.querySelector('.alert').innerHTML = "";
-  
+
   registration.reg(enteredReg);
   registration.mapRegs();
   localStorage.setItem('Registrations', JSON.stringify(registration.registrations()));
@@ -70,54 +70,60 @@ function processRegistrations() {
 function filterBy(town) {
   //if (!town || town === 'allTowns')
   let regs = Object.keys(storedRegs);
-  location.hash = town; 
+  location.hash = town;
   townElem.value = location.hash.substr(1);
   switch (town) {
     case 'cape-town':
-    case '#cape-town': displayElem.innerHTML = "";
+    case '#cape-town':
+      displayElem.innerHTML = "";
       if (regs.length > 0) {
         for (let i = 0; i < regs.length; i++) {
-          if (regs[i].startsWith('CA')) 
+          if (regs[i].startsWith('CA'))
             createElem(regs[i]);
         }
       }
       break;
     case 'paarl':
-    case '#paarl': displayElem.innerHTML = "";
+    case '#paarl':
+      displayElem.innerHTML = "";
       if (regs.length > 0) {
         for (let i = 0; i < regs.length; i++) {
-          if (regs[i].startsWith('CJ')) 
+          if (regs[i].startsWith('CJ'))
             createElem(regs[i]);
         }
       }
       break;
     case 'george':
-    case '#george': displayElem.innerHTML = "";
+    case '#george':
+      displayElem.innerHTML = "";
       if (regs.length > 0) {
         for (let i = 0; i < regs.length; i++) {
-          if (regs[i].startsWith('CK')) 
+          if (regs[i].startsWith('CAW'))
             createElem(regs[i]);
         }
       }
       break;
     case 'stellenbosch':
-    case '#stellenbosch': displayElem.innerHTML = "";
+    case '#stellenbosch':
+      displayElem.innerHTML = "";
       if (regs.length > 0) {
         for (let i = 0; i < regs.length; i++) {
-          if (regs[i].startsWith('CL')) 
+          if (regs[i].startsWith('CL'))
             createElem(regs[i]);
         }
       }
       break;
-    case 'all': 
-    case '#all': displayElem.innerHTML = "";
+    case 'all':
+    case '#all':
+      displayElem.innerHTML = "";
       if (regs.length > 0) {
         for (let i = 0; i < regs.length; i++) {
           createElem(regs[i]);
         }
       }
       break;
-    default: displayElem.innerHTML = location.hash.substr(1) + " is not a valid town.";
+    default:
+      displayElem.innerHTML = location.hash.substr(1) + " is not a valid town.";
       break;
   }
 }
@@ -135,7 +141,7 @@ window.addEventListener('load', function() {
     filterBy(townElem.value);
   }
 });
-
-townElem.addEventListener('change', function(){
+window.addEventListener('hashchange', filterBy(location.hash));
+townElem.addEventListener('change', function() {
   filterBy(townElem.value);
 })
