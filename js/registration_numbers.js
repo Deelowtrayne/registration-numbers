@@ -141,7 +141,7 @@ window.addEventListener('load', function() {
     filterBy(townElem.value);
   }
 });
-window.addEventListener('hashchange', filterBy(location.hash));
+
 townElem.addEventListener('change', function() {
   filterBy(townElem.value);
 })
