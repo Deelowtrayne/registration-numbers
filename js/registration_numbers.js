@@ -8,11 +8,16 @@ var displayElem = document.querySelector('.display-area');
 
 function Registration(storedData) {
   var reg = "";
-  var regList = {}
+  var regList = storedData || {}
 
   function setReg(num) {
-    if (num.startsWith('CA') || num.startsWith('CJ') || num.startsWith('CAW') || num.startsWith('CL'))
-      reg = num;
+    if(regList[num] === undefined){
+      if (num.startsWith('CA') || num.startsWith('CJ') || num.startsWith('CAW') || num.startsWith('CL')){
+        reg = num;
+        return true;
+      }
+    }
+    return false;
   }
 
   function regMap() {
@@ -44,6 +49,7 @@ var registration = Registration(storedRegs);
 
 function createElem(reg) {
   // generate list item for
+
   let li = document.createElement('li');
   li.textContent = reg;
   displayElem.appendChild(li);
@@ -54,17 +60,20 @@ function processRegistrations() {
   inputElem.value = "";
   if (enteredReg == "" || (!enteredReg.startsWith('CA') && !enteredReg.startsWith('CJ') &&
       !enteredReg.startsWith('CAW') && !enteredReg.startsWith('CL'))) {
-    document.querySelector('.alert').innerHTML = "Please enter a valid registration number";
+        document.querySelector('.alert').innerHTML = "Please enter a valid registration number";
     return;
   }
   // empty the alert element
   document.querySelector('.alert').innerHTML = "";
 
-  registration.reg(enteredReg);
-  registration.mapRegs();
-  localStorage.setItem('Registrations', JSON.stringify(registration.registrations()));
-  // generate list item for display
-  createElem(registration.regNumber());
+  if (registration.reg(enteredReg)) {
+    registration.mapRegs();
+    localStorage.setItem('Registrations', JSON.stringify(registration.registrations()));
+    // generate list item for display
+    createElem(registration.regNumber());
+  }
+
+
 }
 
 function filterBy(town) {
@@ -137,9 +146,9 @@ function clearAll() {
   displayElem.innerHTML = "";
 }
 
-/*****************************************************
+/******************************************************
  *  LISTEN FOR BUTTON CLICKS AND ELEMENT STATE-CHANGE
- *****************************************************/
+ ******************************************************/
 
 btnAdd.addEventListener('click', processRegistrations);
 

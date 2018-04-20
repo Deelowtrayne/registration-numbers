@@ -42,6 +42,7 @@ describe('Tests Registration Numbers application', function(){
     registration.mapRegs();
     registration.reg('CAW12312');
     registration.mapRegs();
+    console.log();
     assert.deepEqual(registration.registrations(), {CA12312:0, CAW12312:0});
   });
   it ('Should return the map with 3 registration numbers from external source ({CA 7234:0, CAW 0923:0, CL 2342:0})', function(){
