@@ -43,7 +43,6 @@ h1 small {
   color: #fff;
   padding: 0.5rem 2rem;
   background: crimson;
-  box-shadow: 1px 1px 2px;
 }
 
 .topbar .row {
@@ -54,7 +53,7 @@ h1 small {
 }
 
 .main {
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 
 .alert {
@@ -78,7 +77,7 @@ h1 small {
 }
 
 .row input {
-  width: 65%;
+  width: 70%;
   padding: 0.5rem;
 }
 
@@ -92,12 +91,24 @@ h1 small {
 .row button {
   width: auto;
   padding: 0.5rem;
-  min-width: 5rem;
-  max-width: 10rem;
+  width: 4rem;
 }
 
 .display-area {
   list-style-type: none;
+  text-align: center;
+  padding: 0;
+}
+
+.display-area li {
+  display: inline-block;
+  max-width: 200px;
+  padding: 0.4rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  background: rgba(255, 255, 0, 0.637);
+  border: 2px #2a2a2a solid;
+  border-radius: 4px;
 }
 
 .clear-btn {

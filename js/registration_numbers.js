@@ -8,24 +8,15 @@ var displayElem = document.querySelector('.display-area');
 
 function Registration(storedData) {
   var reg = "";
-  var regList = storedData || {}
+  var regList = storedData || {};
 
   function setReg(num) {
     if(regList[num] === undefined){
-      if (num.startsWith('CA') || num.startsWith('CJ') || num.startsWith('CAW') || num.startsWith('CL')){
-        reg = num;
-        return true;
-      }
+      reg = num;
+      regList[reg] = 0;
+      return true;
     }
     return false;
-  }
-
-  function regMap() {
-    if (storedData)
-      regList = storedData;
-
-    if (regList[reg] == undefined)
-      regList[reg] = 0;
   }
 
   function getReg() {
@@ -39,8 +30,7 @@ function Registration(storedData) {
   return {
     reg: setReg,
     regNumber: getReg,
-    registrations: getRegMap,
-    mapRegs: regMap
+    registrations: getRegMap
   }
 }
 // Run this as soon as the page loads
@@ -49,13 +39,37 @@ var registration = Registration(storedRegs);
 
 function createElem(reg) {
   // generate list item for
-
   let li = document.createElement('li');
   li.textContent = reg;
   displayElem.appendChild(li);
 }
 
-function processRegistrations() {
+function updateDisplay(tag) {
+  let regs = Object.keys(storedRegs);
+  // check if there is data in the local storage
+  if (regs.length < 1)
+    return;
+
+  displayElem.innerHTML = "";
+
+  if (regs.length > 0 && tag == 'CA') {
+    for (let i = 0; i < regs.length; i++) {
+      if (regs[i].startsWith('CA') && regs[i].charAt(2) != 'W')
+        createElem(regs[i]);
+    }
+  } else if (regs.length > 0 && tag == 'all') {
+    for (let i = 0; i < regs.length; i++) {
+      createElem(regs[i]);
+    }
+  } else if (regs.length > 0) {
+    for (let i = 0; i < regs.length; i++) {
+      if (regs[i].startsWith(tag))
+        createElem(regs[i]);
+    }
+  } 
+}
+
+function addRegistration() {
   var enteredReg = inputElem.value.trim();
   inputElem.value = "";
   if (enteredReg == "" || (!enteredReg.startsWith('CA') && !enteredReg.startsWith('CJ') &&
@@ -63,77 +77,31 @@ function processRegistrations() {
         document.querySelector('.alert').innerHTML = "Please enter a valid registration number";
     return;
   }
-  // empty the alert element
+  // else empty the alert element, set update local storage
   document.querySelector('.alert').innerHTML = "";
-
   if (registration.reg(enteredReg)) {
-    registration.mapRegs();
     localStorage.setItem('Registrations', JSON.stringify(registration.registrations()));
     // generate list item for display
     createElem(registration.regNumber());
   }
-
-
-}
+} 
 
 function filterBy(town) {
-  //if (!town || town === 'allTowns')
-  let regs = Object.keys(storedRegs);
   location.hash = town;
   townElem.value = location.hash.substr(1);
   switch (town) {
     case 'cape-town':
-    case '#cape-town':
-      displayElem.innerHTML = "";
-      if (regs.length > 0) {
-        for (let i = 0; i < regs.length; i++) {
-          if (regs[i].startsWith('CA') && regs[i].charAt(2) != 'W')
-            createElem(regs[i]);
-        }
-      }
-      break;
+    case '#cape-town': updateDisplay('CA'); break;
     case 'paarl':
-    case '#paarl':
-      displayElem.innerHTML = "";
-      if (regs.length > 0) {
-        for (let i = 0; i < regs.length; i++) {
-          if (regs[i].startsWith('CJ'))
-            createElem(regs[i]);
-        }
-      }
-      break;
+    case '#paarl': updateDisplay('CJ');  break;
     case 'george':
-    case '#george':
-      displayElem.innerHTML = "";
-      if (regs.length > 0) {
-        for (let i = 0; i < regs.length; i++) {
-          if (regs[i].startsWith('CAW'))
-            createElem(regs[i]);
-        }
-      }
-      break;
+    case '#george': updateDisplay('CAW'); break;
     case 'stellenbosch':
-    case '#stellenbosch':
-      displayElem.innerHTML = "";
-      if (regs.length > 0) {
-        for (let i = 0; i < regs.length; i++) {
-          if (regs[i].startsWith('CL'))
-            createElem(regs[i]);
-        }
-      }
-      break;
+    case '#stellenbosch': updateDisplay('CL'); break;
     case '':
     case 'all':
-    case '#all':
-      displayElem.innerHTML = "";
-      if (regs.length > 0) {
-        for (let i = 0; i < regs.length; i++) {
-          createElem(regs[i]);
-        }
-      }
-      break;
-    default:
-      displayElem.innerHTML = location.hash.substr(1) + " is not a valid town.";
+    case '#all': updateDisplay('all'); break;
+    default: displayElem.innerHTML = location.hash.substr(1) + " is not a valid town."; 
       break;
   }
 }
@@ -150,7 +118,7 @@ function clearAll() {
  *  LISTEN FOR BUTTON CLICKS AND ELEMENT STATE-CHANGE
  ******************************************************/
 
-btnAdd.addEventListener('click', processRegistrations);
+btnAdd.addEventListener('click', addRegistration);
 
 window.addEventListener('load', function() {
 
