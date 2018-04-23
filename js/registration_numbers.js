@@ -11,7 +11,7 @@ function Registration(storedData) {
   var regList = storedData || {};
 
   function setReg(num) {
-    if(regList[num] === undefined && (num.startsWith('CA') || num.startsWith('CA') ||
+    if(regList[num] === undefined && (num.startsWith('CA') ||
         num.startsWith('CL') || num.startsWith('CJ') )){
       reg = num;
       regList[reg] = 0;
