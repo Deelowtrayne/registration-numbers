@@ -29,19 +29,14 @@ describe('Tests Registration Numbers application', function(){
     // This should be false because the function will not record a (CG) registration
     let registration = Registration();
     registration.reg('CA12312');
-    registration.mapRegs();
     registration.reg('CAW12312');
-    registration.mapRegs();
     assert.deepEqual(registration.registrations(), {CA12312:0, CAW12312:0});
   });
   it ('Should return the map with 2 set registration numbers; skips duplicates ({CA12312:0, CAW12312:0})', function(){
     let registration = Registration();
     registration.reg('CA12312');
-    registration.mapRegs();
     registration.reg('CA12312');
-    registration.mapRegs();
     registration.reg('CAW12312');
-    registration.mapRegs();
     console.log();
     assert.deepEqual(registration.registrations(), {CA12312:0, CAW12312:0});
   });
@@ -49,7 +44,6 @@ describe('Tests Registration Numbers application', function(){
     let externalData = {'CA 7234':0, 'CAW 0923':0, 'CL 2342':0};
     //console.log(externalData);
     let registration = Registration(externalData);
-    registration.mapRegs();
     assert.deepEqual(registration.registrations(), {'CA 7234':0, 'CAW 0923':0, 'CL 2342':0, "":0});
   });
 
