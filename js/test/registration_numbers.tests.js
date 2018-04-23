@@ -44,7 +44,7 @@ describe('Tests Registration Numbers application', function(){
     let externalData = {'CA 7234':0, 'CAW 0923':0, 'CL 2342':0};
     //console.log(externalData);
     let registration = Registration(externalData);
-    assert.deepEqual(registration.registrations(), {'CA 7234':0, 'CAW 0923':0, 'CL 2342':0, "":0});
+    assert.deepEqual(registration.registrations(), {'CA 7234':0, 'CAW 0923':0, 'CL 2342':0});
   });
 
 });

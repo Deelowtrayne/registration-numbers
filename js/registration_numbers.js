@@ -11,7 +11,8 @@ function Registration(storedData) {
   var regList = storedData || {};
 
   function setReg(num) {
-    if(regList[num] === undefined){
+    if(regList[num] === undefined && (num.startsWith('CA') || num.startsWith('CA') ||
+        num.startsWith('CL') || num.startsWith('CJ') )){
       reg = num;
       regList[reg] = 0;
       return true;
@@ -66,25 +67,22 @@ function updateDisplay(tag) {
       if (regs[i].startsWith(tag))
         createElem(regs[i]);
     }
-  } 
+  }
 }
 
 function addRegistration() {
   var enteredReg = inputElem.value.trim();
   inputElem.value = "";
-  if (enteredReg == "" || (!enteredReg.startsWith('CA') && !enteredReg.startsWith('CJ') &&
-      !enteredReg.startsWith('CAW') && !enteredReg.startsWith('CL'))) {
-        document.querySelector('.alert').innerHTML = "Please enter a valid registration number";
-    return;
-  }
-  // else empty the alert element, set update local storage
-  document.querySelector('.alert').innerHTML = "";
   if (registration.reg(enteredReg)) {
+    // else empty the alert element, set update local storage
+    document.querySelector('.alert').innerHTML = "";
     localStorage.setItem('Registrations', JSON.stringify(registration.registrations()));
     // generate list item for display
     createElem(registration.regNumber());
+  } else {
+    document.querySelector('.alert').innerHTML = "Please enter a valid registration number";
   }
-} 
+}
 
 function filterBy(town) {
   location.hash = town;
@@ -101,7 +99,7 @@ function filterBy(town) {
     case '':
     case 'all':
     case '#all': updateDisplay('all'); break;
-    default: displayElem.innerHTML = location.hash.substr(1) + " is not a valid town."; 
+    default: displayElem.innerHTML = location.hash.substr(1) + " is not a valid town.";
       break;
   }
 }
@@ -112,6 +110,7 @@ function clearAll() {
   inputElem.value = "";
   location.hash = "";
   displayElem.innerHTML = "";
+  document.querySelector('.alert').innerHTML = "";
 }
 
 /******************************************************
