@@ -6,9 +6,10 @@ var townElem = document.querySelector('.town-select');
 // display element
 var displayElem = document.querySelector('.display-area');
 
-function Registration(storedData) {
+
+function Registration(stored) {
   var reg = "";
-  var regList = storedData || {};
+  var regList = stored || {};
 
   function setReg(num) {
     if(regList[num] === undefined && (num.startsWith('CA') ||
@@ -41,6 +42,7 @@ var registration = Registration(storedRegs);
 function createElem(reg) {
   // generate list item for
   let li = document.createElement('li');
+  li.className = "reg-plate";
   li.textContent = reg;
   displayElem.appendChild(li);
 }
@@ -68,6 +70,9 @@ function updateDisplay(tag) {
         createElem(regs[i]);
     }
   }
+
+
+
 }
 
 function addRegistration() {
@@ -79,6 +84,7 @@ function addRegistration() {
     localStorage.setItem('Registrations', JSON.stringify(registration.registrations()));
     // generate list item for display
     createElem(registration.regNumber());
+
   } else {
     document.querySelector('.alert').innerHTML = "Please enter a valid registration number";
   }
@@ -105,7 +111,7 @@ function filterBy(town) {
 }
 
 function clearAll() {
-  localStorage.clear();
+  localStorage.removeItem('Registrations');
   townElem.value = 'all'
   inputElem.value = "";
   location.hash = "";

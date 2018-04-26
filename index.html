@@ -8,6 +8,15 @@
   <title>Registration Numbers</title>
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+  <script type="text/x-template" class="registration-template">
+    {{#each regList}}
+    <li class="reg-plate">
+      {{ @key }}
+    </li>
+    {{/each}}
+  </script>
+
 </head>
 
 <body>
@@ -17,34 +26,68 @@
     </div>
   </div>
   <div class="container">
-    <div class="main">
-      <div class="row">
-        <label for="">Registration number:<span class="alert"></span></label>
-        <input type="text" class="regNumber">
-        <button class="submit-btn">Add</button>
-      </div>
-      <div class="row">
-        <label for="">Town:</label>
-        <select class="town-select" name="town_select">
-          <option value="all">All Towns</option>
-          <option value="cape-town">Cape Town</option>
-          <option value="paarl">paarl</option>
-          <option value="george">George</option>
-          <option value="stellenbosch">Stellenbosch</option>
-        </select>
-      </div>
 
-      <div class="row">
-        <button type="button" class="clear-btn"><i class="fas fa-trash-alt"></i></button>
-        <ul class="display-area">
-          <!-- Registration numbers get listed down here -->
-        </ul>
+    <div class="half">
+      <h2>This side is static HTML</h2>
+      <div class="main">
+        <div class="row">
+          <label for="">Registration number:<span class="alert"></span></label>
+          <input type="text" class="regNumber">
+          <button class="submit-btn">Add</button>
+        </div>
+        <div class="row">
+          <label for="">Town:</label>
+          <select class="town-select" name="town_select">
+            <option value="all">All Towns</option>
+            <option value="cape-town">Cape Town</option>
+            <option value="paarl">paarl</option>
+            <option value="george">George</option>
+            <option value="stellenbosch">Stellenbosch</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <button type="button" class="clear-btn"><i class="fas fa-trash-alt"></i></button>
+          <ul class="display-area">
+            <!-- Registration numbers get listed down here -->
+          </ul>
+        </div>
       </div>
-    </div>
+    </div><!-- /half -->
+    <hr>
+    <div class="half">
+      <h2>This side uses Handlebars</h2>
+      <div class="main">
+        <div class="row">
+          <label for="">Registration number:<span class="alert2"></span></label>
+          <input type="text" class="reg-number">
+          <button class="add-btn">Add</button>
+        </div>
+        <div class="row">
+          <label for="">Town:</label>
+          <select class="town-select2" name="town_select">
+            <option value="all">All Towns</option>
+            <option value="cape-town">Cape Town</option>
+            <option value="paarl">paarl</option>
+            <option value="george">George</option>
+            <option value="stellenbosch">Stellenbosch</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <button type="button" class="clear-btn2"><i class="fas fa-trash-alt"></i></button>
+          <ul id="display-area">
+            <!-- Registration numbers get listed down here -->
+          </ul>
+        </div>
+      </div>
+    </div><!-- /half -->
+
   </div>
   <footer>Developed by <a href="https://deelowtrayne.github.io" target="_blank">Luvuyo Sono</a></footer>
   <!-- scripts -->
   <script src="js/registration_numbers.js"></script>
+  <script src="js/handlebars_registration.js"></script>
 </body>
 
 </html>
