@@ -25,26 +25,27 @@ describe('Tests Registration Numbers application', function(){
     registration.reg('CG12312');
     assert.notEqual(registration.regNumber(), 'CG12312');
   });
-  it ('Should return the map with 2 set registration numbers ({CA12312:0, CAW12312:0})', function(){
+  it ('Should return the map with 2 set registration numbers ([CA12312, CAW12312])', function(){
     // This should be false because the function will not record a (CG) registration
     let registration = Registration();
     registration.reg('CA12312');
     registration.reg('CAW12312');
-    assert.deepEqual(registration.registrations(), {CA12312:0, CAW12312:0});
+    assert.deepEqual(registration.registrations(), ['CA12312', 'CAW12312']);
   });
-  it ('Should return the map with 2 set registration numbers; skips duplicates ({CA12312:0, CAW12312:0})', function(){
+  it ('Should return the map with 2 set registration numbers; skips duplicates ([CA12312:0, CAW12312])', function(){
     let registration = Registration();
     registration.reg('CA12312');
     registration.reg('CA12312');
     registration.reg('CAW12312');
     console.log();
-    assert.deepEqual(registration.registrations(), {CA12312:0, CAW12312:0});
+    assert.deepEqual(registration.registrations(), ['CA12312', 'CAW12312']);
   });
-  it ('Should return the map with 3 registration numbers from external source ({CA 7234:0, CAW 0923:0, CL 2342:0})', function(){
-    let externalData = {'CA 7234':0, 'CAW 0923':0, 'CL 2342':0};
+  it ('Should return the map with 3 registration numbers from external source ([CA 7234, CAW 0923, CL 2342])', function(){
+    let externalData = ['CA 7234', 'CAW 0923', 'CL 2342'];
     //console.log(externalData);
     let registration = Registration(externalData);
-    assert.deepEqual(registration.registrations(), {'CA 7234':0, 'CAW 0923':0, 'CL 2342':0});
+    console.log(registration.registrations());
+    assert.deepEqual(registration.registrations(), ['CA 7234', 'CAW 0923', 'CL 2342']);
   });
 
 });

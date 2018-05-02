@@ -10,7 +10,6 @@ const DISPLAY_ELEM = document.querySelector('#display-area');
 var storedRegs2 = localStorage.getItem('HB-Registrations') ? JSON.parse(localStorage.getItem('HB-Registrations')) : {};
 let newRegistration = Registration(storedRegs2);
 
-
 function addNew() {
   let enteredReg = INPUT_ELEM.value.trim();
   INPUT_ELEM.value = "";
@@ -20,8 +19,7 @@ function addNew() {
     localStorage.setItem('HB-Registrations', JSON.stringify(newRegistration.registrations()));
     // generate list item for display
     DISPLAY_ELEM.innerHTML = REG_TEMPLATE({
-      regList: newRegistration.registrations(),
-      reg_number: newRegistration.regNumber()
+      regList: newRegistration.registrations()
     });
   } else {
     document.querySelector('.alert2').innerHTML = "Please enter a valid registration number";
@@ -35,40 +33,17 @@ function updateHandlebarsDisplay(tag) {
   if (regs.length < 1)
     return;
 
-  displayElem.innerHTML = "";
+  if(tag === 'all')
+    return regs;
 
-  if (regs.length > 0 && tag == 'CA') {
-    for (let i = 0; i < regs.length; i++) {
-      if (regs[i].startsWith('CA') && regs[i].charAt(2) != 'W')
-        output.push(regs[i]);
-    }
-  } else if (regs.length > 0) {
+  if (regs.length > 0) {
     for (let i = 0; i < regs.length; i++) {
       if (regs[i].startsWith(tag))
         output.push(regs[i]);
     }
-  } else if (regs.length > 0 && tag == 'all') {
-    return regs;
   }
-
   return output;
 }
-
-function filterByTown(town) {
-  location.hash = town;
-  townElem.value = location.hash.substr(1);
-  switch (town) {
-    case 'all': updateDisplay('all'); break;
-    case 'cape-town': updateDisplay('CA'); break;
-    case 'paarl': updateDisplay('CJ');  break;
-    case 'george': updateDisplay('CAW'); break;
-    case 'stellenbosch': updateDisplay('CL'); break;
-    default: displayElem.innerHTML = location.hash.substr(1) + " is not a valid town.";
-      break;
-  }
-}
-
-
 
 function handlebarsClearAll() {
   localStorage.removeItem('HB-Registrations');
@@ -80,16 +55,17 @@ function handlebarsClearAll() {
 }
 
 ADD_BTN.addEventListener('click', addNew);
+
 clearBtn2.addEventListener('click', handlebarsClearAll);
+
 townElem2.addEventListener('change', function() {
-  console.log(filterBy(townElem2.value));
   DISPLAY_ELEM.innerHTML = REG_TEMPLATE({
-    regList: filterBy(townElem2.value)
+    regList: newRegistration.filterBy(townElem2.value)
   });
 });
 
 //
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('load', function() {
   DISPLAY_ELEM.innerHTML = REG_TEMPLATE({
     regList: newRegistration.registrations()
   });
